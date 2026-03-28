@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Typography Maker Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Inter:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+body {
+  background: #000;
+  color: white;
+  text-align: center;
+  font-family: 'Poppins';
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  color: black;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  background: yellow;
+  font-weight: bold;
+}
+
+.preview {
+  margin: 20px;
+  padding: 40px;
+  border-radius: 15px;
+  background: #111;
+}
+
+#hookText { font-size: 28px; font-weight: bold; }
+#bodyText { margin-top: 10px; }
+#highlightText { color: yellow; margin-top: 10px; }
+
+/* stickers */
+.stickers span {
+  font-size: 24px;
+  margin: 5px;
+  cursor: pointer;
+}
+#hookText, #bodyText, #highlightText {
+  text-shadow: 0 0 5px black, 0 0 10px black;
+}
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+@keyframes slideUp {
+  from {transform: translateY(50px); opacity:0;}
+  to {transform: translateY(0); opacity:1;}
+}
+
+@keyframes zoomIn {
+  from {transform: scale(0.5); opacity:0;}
+  to {transform: scale(1); opacity:1;}
+}
+
+.fade { animation: fadeIn 1s ease; }
+.slide { animation: slideUp 1s ease; }
+.zoom { animation: zoomIn 1s ease; }
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.typing {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid white;
+  width: 0;
+  animation: typing 2s steps(30,end) forwards;
+}
+.gradient {
+  background: linear-gradient(45deg, yellow, orange, red);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.neon {
+  color: #fff;
+  text-shadow: 0 0 5px #fff, 0 0 10px yellow, 0 0 20px orange;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔥 Typography Maker Pro</h2>
+
+<input id="hook" placeholder="Hook text">
+<input id="body" placeholder="Body text">
+<input id="highlight" placeholder="Highlight text">
+
+<br>
+
+<button onclick="updateText()">Generate</button>
+<button onclick="downloadImage()">Download</button>
+<button onclick="recordScreen()">🎬 Record Reel</button>
+<button onclick="setGradient()">🌈 Gradient</button>
+<button onclick="setNeon()">✨ Neon</button>
+<button onclick="generateScript()">🤖 AI Script</button>
+<p>🎬 Animation</p>
+<select onchange="setAnimation(this.value)">
+  <option value="fade">Fade</option>
+  <option value="slide">Slide</option>
+  <option value="zoom">Zoom</option>
+</select>
+<br>
+
+<!-- 🎨 COLORS -->
+<p>🎨 Text Color</p>
+<input type="color" onchange="changeTextColor(this.value)">
+
+<p>🖼️ Background</p>
+<input type="color" onchange="changeBg(this.value)">
+
+<!-- ✨ TEMPLATES -->
+<p>🔥 Templates</p>
+<button onclick="setTemplate(1)">Motivation</button>
+<button onclick="setTemplate(2)">Sad</button>
+<button onclick="setTemplate(3)">Attitude</button>
+<button onclick="setTemplate(4)">Love</button>
+<button onclick="setTemplate(5)">Reality</button>
+<p>📸 Upload Background</p>
+<input type="file" accept="image/*" onchange="uploadBg(event)">
+<!-- 😎 Stickers -->
+<p>😎 Stickers</p>
+<div class="stickers">
+  <span onclick="addSticker('🔥')">🔥</span>
+  <span onclick="addSticker('😎')">😎</span>
+  <span onclick="addSticker('❤️')">❤️</span>
+  <span onclick="addSticker('💔')">💔</span>
+  <span onclick="addSticker('✨')">✨</span>
+</div>
+
+<!-- Preview -->
+<div class="preview" id="preview">
+  <div id="hookText">Hook</div>
+  <div id="bodyText">Body</div>
+  <div id="highlightText">Highlight</div>
+</div>
+
+<script>
+function updateText() {
+  hookText.innerText = hook.value;
+  bodyText.innerText = body.value;
+  highlightText.innerText = highlight.value;
+}
+typingEffect();
+function changeTextColor(color) {
+  preview.style.color = color;
+}
+
+function changeBg(color) {
+  preview.style.background = color;
+}
+
+// Templates
+function setTemplate(type) {
+  if(type===1){
+    hook.value="Success unko milta hai jo rukte nahi";
+    body.value="Har din mehnat karo";
+    highlight.value="Never Give Up 🔥";
+  }
+  if(type===2){
+    hook.value="Log badal jaate hain";
+    body.value="Aur wajah bhi nahi batate";
+    highlight.value="💔 Reality";
+  }
+  if(type===3){
+    hook.value="Main akela hi kaafi hoon";
+    body.value="Mujhe kisi ki zarurat nahi";
+    highlight.value="😎 Attitude";
+  }
+  if(type===4){
+    hook.value="Tum hi meri duniya ho";
+    body.value="Tumhare bina sab adhoora hai";
+    highlight.value="❤️ Love";
+  }
+  if(type===5){
+    hook.value="Sach kadwa hota hai";
+    body.value="Lekin hamesha sach hi jeet ta hai";
+    highlight.value="🔥 Reality";
+  }
+  updateText();
+}
+
+// Stickers
+function addSticker(emoji) {
+  highlightText.innerText += " " + emoji;
+}
+
+// Download
+function downloadImage() {
+  html2canvas(document.getElementById("preview")).then(canvas => {
+    let link = document.createElement("a");
+    link.download = "typography.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+function uploadBg(event){
+  let file = event.target.files[0];
+  let reader = new FileReader();
+  reader.onload = function(e){
+    preview.style.background = "url('" + e.target.result + "')";
+    preview.style.backgroundSize = "cover";
+  }
+  reader.readAsDataURL(file);
+}
+function setAnimation(type){
+  let preview = document.getElementById("preview");
+
+  preview.classList.remove("fade","slide","zoom");
+
+  setTimeout(()=>{
+    preview.classList.add(type);
+  },10);
+}
+function typingEffect(){
+  hookText.className="typing";
+  bodyText.className="typing";
+  highlightText.className="typing";
+}
+function recordScreen(){
+  alert("Use your phone screen recorder to record animation 🎬");
+}
+function setGradient(){
+  hookText.className="gradient";
+  bodyText.className="gradient";
+  highlightText.className="gradient";
+}
+
+function setNeon(){
+  hookText.className="neon";
+  bodyText.className="neon";
+  highlightText.className="neon";
+}
+function generateScript(){
+  let hooks=[
+    "Tum fail nahi hue ho...",
+    "Log tumhe judge karenge...",
+    "Aaj mushkil hai...",
+    "Jo log haste hain..."
+  ];
+
+  let body=[
+    "Bas tum ruk gaye ho",
+    "Par tum rukna mat",
+    "Kal sab badlega",
+    "Ek din sab samjhenge"
+  ];
+
+  let highlight=[
+    "🔥 Keep Going",
+    "💯 Reality",
+    "😎 Attitude",
+    "❤️ Believe"
+  ];
+
+  hook.value = hooks[Math.floor(Math.random()*hooks.length)];
+  body.value = body[Math.floor(Math.random()*body.length)];
+  highlight.value = highlight[Math.floor(Math.random()*highlight.length)];
+
+  updateText();
+}
+</script>
+
+</body>
+</html>
+  
+  
